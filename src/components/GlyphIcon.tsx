@@ -6,7 +6,9 @@ type Name =
   | "brain" | "spark" | "compass" | "trophy" | "shield" | "bolt"
   | "orbit" | "book" | "chat" | "calendar" | "target" | "flame";
 
-const paths: Record<Name, JSX.Element> = {
+import type { ReactNode } from "react";
+
+const paths: Record<Name, ReactNode> = {
   brain: (
     <>
       <path d="M8 4a3 3 0 00-3 3v1a3 3 0 00-1 5.5V16a3 3 0 003 3h1V4H8z" />

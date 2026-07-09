@@ -27,37 +27,37 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
       <BackgroundFX />
       <CommandPalette />
 
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/40 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
+      <header className="sticky top-0 z-40 border-b border-white/8 bg-[oklch(0.125_0.008_260)]/85 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-3">
             <button
-              className="rounded-lg border border-white/10 p-2 text-white/80 lg:hidden"
+              className="rounded-md border border-white/10 p-1.5 text-white/80 lg:hidden"
               onClick={() => setOpen(!open)}
               aria-label="Toggle menu"
             >
-              {open ? <X size={18} /> : <Menu size={18} />}
+              {open ? <X size={16} /> : <Menu size={16} />}
             </button>
             <Link to="/dashboard"><Logo /></Link>
           </div>
-          {title && <div className="hidden text-sm font-medium text-white/60 md:block">{title}</div>}
+          {title && <div className="hidden text-xs font-medium text-white/50 md:block">{title}</div>}
           <div className="flex items-center gap-2">
             <button
               onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
-              className="hidden items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-white/60 hover:bg-white/10 sm:inline-flex"
+              className="hidden items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1.5 text-[11px] text-white/55 hover:bg-white/[0.06] hover:text-white/80 sm:inline-flex"
               aria-label="Open command palette"
             >
-              <Command size={12} /> Quick jump <kbd className="rounded bg-white/10 px-1 text-[10px]">⌘K</kbd>
+              <Command size={11} /> Quick jump <kbd className="rounded bg-white/10 px-1 text-[10px]">⌘K</kbd>
             </button>
-            <Link to="/profile" aria-label="Profile" className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-sm font-bold text-slate-900 ring-2 ring-white/20 transition hover:ring-white/40">
-              <User size={16} />
+            <Link to="/profile" aria-label="Profile" className="grid h-8 w-8 place-items-center rounded-full border border-white/15 bg-[oklch(0.19_0.010_260)] text-xs font-medium text-white/80 transition hover:border-white/30 hover:text-white">
+              <User size={14} />
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6">
-        <aside className={`${open ? "block" : "hidden"} lg:block fixed inset-0 top-16 z-30 w-64 shrink-0 bg-slate-950/95 p-4 backdrop-blur-xl lg:static lg:inset-auto lg:bg-transparent lg:p-0`}>
-          <nav className="glass sticky top-24 space-y-1 rounded-2xl p-3">
+      <div className="mx-auto flex max-w-7xl gap-6 px-4 py-6 sm:px-6">
+        <aside className={`${open ? "block" : "hidden"} lg:block fixed inset-0 top-14 z-30 w-64 shrink-0 bg-[oklch(0.125_0.008_260)]/98 p-4 backdrop-blur-xl lg:static lg:inset-auto lg:top-auto lg:bg-transparent lg:p-0`}>
+          <nav className="sticky top-20 space-y-0.5 rounded-lg border border-white/8 bg-white/[0.02] p-2">
             {nav.map((item) => {
               const active = pathname.startsWith(item.to);
               const Icon = item.icon;
@@ -66,16 +66,14 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
                   key={item.to}
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+                  className={`relative flex items-center gap-2.5 rounded-md px-3 py-2 text-[13px] font-medium transition ${
                     active
-                      ? "bg-gradient-to-r from-cyan-400/20 to-fuchsia-400/10 text-cyan-100 ring-1 ring-cyan-400/30"
-                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                      ? "bg-white/[0.06] text-white"
+                      : "text-white/60 hover:bg-white/[0.03] hover:text-white/90"
                   }`}
                 >
-                  {active && (
-                    <span aria-hidden className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-r bg-gradient-to-b from-cyan-300 to-fuchsia-400" />
-                  )}
-                  <Icon size={18} />
+                  {active && <span aria-hidden className="absolute left-0 top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-r bg-[oklch(0.72_0.13_250)]" />}
+                  <Icon size={15} strokeWidth={1.75} />
                   {item.label}
                 </Link>
               );
@@ -83,11 +81,11 @@ export function AppShell({ children, title }: { children: ReactNode; title?: str
           </nav>
         </aside>
 
-        <main className="min-w-0 flex-1">{children}</main>
+        <main className="min-w-0 flex-1 animate-fade-up">{children}</main>
       </div>
 
-      <footer className="border-t border-white/10 py-6 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} A Vibe Campus · <Link to="/legal" className="hover:text-cyan-300">Legal</Link>
+      <footer className="border-t border-white/8 py-6 text-center text-[11px] text-white/40">
+        © {new Date().getFullYear()} A Vibe Campus · <Link to="/legal" className="hover:text-white/70">Legal</Link>
       </footer>
     </div>
   );
