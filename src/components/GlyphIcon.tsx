@@ -1,107 +1,61 @@
 /**
- * Custom 3D-styled SVG icon set with gradient extrusion.
- * Use like: <GlyphIcon name="brain" size={24} />
+ * Minimal, monochromatic SVG icon set. Uses currentColor so it inherits accent color.
+ * Not a rainbow. Not 3D. Just clean line/fill glyphs.
  */
-type Name = "brain" | "spark" | "compass" | "trophy" | "shield" | "bolt" | "orbit" | "book" | "chat" | "calendar" | "target" | "flame";
+type Name =
+  | "brain" | "spark" | "compass" | "trophy" | "shield" | "bolt"
+  | "orbit" | "book" | "chat" | "calendar" | "target" | "flame";
 
-import type { ReactNode } from "react";
-
-const paths: Record<Name, (id: string) => ReactNode> = {
-  brain: (id) => (
+const paths: Record<Name, JSX.Element> = {
+  brain: (
     <>
-      <path d="M9 4a4 4 0 00-4 4v1a3 3 0 00-1 5.7V17a4 4 0 004 4h1V4H9z" fill={`url(#${id}-g)`} />
-      <path d="M15 4a4 4 0 014 4v1a3 3 0 011 5.7V17a4 4 0 01-4 4h-1V4h1z" fill={`url(#${id}-g)`} opacity="0.85" />
-      <path d="M9 8h6M9 12h6M9 16h6" stroke="white" strokeWidth="0.8" opacity="0.4" />
+      <path d="M8 4a3 3 0 00-3 3v1a3 3 0 00-1 5.5V16a3 3 0 003 3h1V4H8z" />
+      <path d="M16 4a3 3 0 013 3v1a3 3 0 011 5.5V16a3 3 0 01-3 3h-1V4h1z" />
     </>
   ),
-  spark: (id) => (
-    <path d="M12 2l2.4 6.2L21 10l-6.6 1.8L12 22l-2.4-10.2L3 10l6.6-1.8L12 2z" fill={`url(#${id}-g)`} />
-  ),
-  compass: (id) => (
+  spark: <path d="M12 2l2.2 5.8L20 10l-5.8 2.2L12 18l-2.2-5.8L4 10l5.8-2.2L12 2z" />,
+  compass: (
     <>
-      <circle cx="12" cy="12" r="10" fill={`url(#${id}-g)`} />
-      <path d="M15 9l-2 5-5 2 2-5 5-2z" fill="white" opacity="0.95" />
-      <circle cx="12" cy="12" r="1.2" fill="oklch(0.14 0.03 265)" />
+      <circle cx="12" cy="12" r="9" fill="none" strokeWidth="1.6" />
+      <path d="M15 9l-2.2 5.2L7.6 16.4l2.2-5.2L15 9z" />
     </>
   ),
-  trophy: (id) => (
+  trophy: (
     <>
-      <path d="M6 4h12v4a6 6 0 01-12 0V4z" fill={`url(#${id}-g)`} />
-      <path d="M4 5h2v3a3 3 0 003 3M20 5h-2v3a3 3 0 01-3 3" stroke="white" strokeWidth="1.4" fill="none" opacity="0.5" />
-      <rect x="9" y="15" width="6" height="2.5" rx="0.5" fill="white" opacity="0.85" />
-      <rect x="7" y="18" width="10" height="2.5" rx="1" fill={`url(#${id}-g)`} />
+      <path d="M7 4h10v5a5 5 0 01-10 0V4z" />
+      <path d="M4 5h3M17 5h3M9 19h6v2H9z" fill="none" strokeWidth="1.6" />
     </>
   ),
-  shield: (id) => (
-    <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z" fill={`url(#${id}-g)`} />
-  ),
-  bolt: (id) => (
-    <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" fill={`url(#${id}-g)`} />
-  ),
-  orbit: (id) => (
+  shield: <path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5l8-3z" />,
+  bolt: <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />,
+  orbit: (
     <>
-      <ellipse cx="12" cy="12" rx="10" ry="4" stroke={`url(#${id}-g)`} strokeWidth="1.5" fill="none" />
-      <ellipse cx="12" cy="12" rx="4" ry="10" stroke={`url(#${id}-g)`} strokeWidth="1.5" fill="none" opacity="0.7" />
-      <circle cx="12" cy="12" r="2.5" fill={`url(#${id}-g)`} />
+      <ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="2.5" />
     </>
   ),
-  book: (id) => (
+  book: <path d="M4 4h7v16H6a2 2 0 01-2-2V4zM20 4h-7v16h5a2 2 0 002-2V4z" />,
+  chat: <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2h-6l-5 4v-4H6a2 2 0 01-2-2V5z" />,
+  calendar: (
     <>
-      <path d="M4 4h7v16H6a2 2 0 01-2-2V4z" fill={`url(#${id}-g)`} />
-      <path d="M20 4h-7v16h5a2 2 0 002-2V4z" fill={`url(#${id}-g)`} opacity="0.75" />
-      <line x1="12" y1="4" x2="12" y2="20" stroke="white" strokeWidth="0.8" opacity="0.5" />
+      <rect x="3" y="5" width="18" height="16" rx="2.5" />
+      <path d="M7 3v4M17 3v4" fill="none" strokeWidth="1.6" stroke="oklch(0.145 0.008 260)" />
     </>
   ),
-  chat: (id) => (
-    <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v9a2 2 0 01-2 2h-6l-5 4v-4H6a2 2 0 01-2-2V5z" fill={`url(#${id}-g)`} />
-  ),
-  calendar: (id) => (
+  target: (
     <>
-      <rect x="3" y="5" width="18" height="16" rx="3" fill={`url(#${id}-g)`} />
-      <rect x="3" y="5" width="18" height="5" rx="3" fill="white" opacity="0.25" />
-      <rect x="7" y="2" width="2" height="5" rx="1" fill="white" opacity="0.9" />
-      <rect x="15" y="2" width="2" height="5" rx="1" fill="white" opacity="0.9" />
+      <circle cx="12" cy="12" r="9" fill="none" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="5" fill="none" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="1.6" />
     </>
   ),
-  target: (id) => (
-    <>
-      <circle cx="12" cy="12" r="10" fill={`url(#${id}-g)`} />
-      <circle cx="12" cy="12" r="6" fill="oklch(0.14 0.03 265)" opacity="0.5" />
-      <circle cx="12" cy="12" r="2.5" fill="white" />
-    </>
-  ),
-  flame: (id) => (
-    <path d="M12 2s5 4 5 9a5 5 0 11-10 0c0-2 1-3 1-3s-1 4 2 4c0 0-2-3 2-6 2 1.5 3 3 3 5a3 3 0 11-6 0" fill={`url(#${id}-g)`} />
-  ),
+  flame: <path d="M12 2s5 4 5 9a5 5 0 01-10 0c0-2 1-3 1-3s-1 4 2 4c0 0-2-3 2-6 2 1.5 3 3 3 5" />,
 };
 
-const gradients: Record<Name, [string, string]> = {
-  brain: ["#22d3ee", "#a78bfa"],
-  spark: ["#fde68a", "#f472b6"],
-  compass: ["#34d399", "#22d3ee"],
-  trophy: ["#fbbf24", "#f472b6"],
-  shield: ["#a78bfa", "#22d3ee"],
-  bolt: ["#22d3ee", "#4f46e5"],
-  orbit: ["#f472b6", "#a78bfa"],
-  book: ["#34d399", "#4f46e5"],
-  chat: ["#22d3ee", "#f472b6"],
-  calendar: ["#a78bfa", "#22d3ee"],
-  target: ["#34d399", "#0891b2"],
-  flame: ["#fb923c", "#f43f5e"],
-};
-
-export function GlyphIcon({ name, size = 24, className }: { name: Name; size?: number; className?: string }) {
-  const uid = `gi-${name}`;
-  const [a, b] = gradients[name];
+export function GlyphIcon({ name, size = 20, className = "" }: { name: Name; size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" className={className} aria-hidden>
-      <defs>
-        <linearGradient id={`${uid}-g`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={a} />
-          <stop offset="100%" stopColor={b} />
-        </linearGradient>
-      </defs>
-      {paths[name](uid)}
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" className={className} aria-hidden>
+      {paths[name]}
     </svg>
   );
 }
