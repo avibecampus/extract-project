@@ -32,10 +32,10 @@ function Legal() {
 
         <article className="glass-strong space-y-4 rounded-2xl p-6 text-sm leading-relaxed text-white/75">
           <h2 className="text-lg font-semibold text-white">{tab}</h2>
-          <p>This is placeholder legal copy for Vibe Campus. Replace with your real {tab.toLowerCase()} before launch.</p>
+          <p>This is placeholder legal copy for A Vibe Campus. Replace with your real {tab.toLowerCase()} before launch.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fermentum dictum orci, non commodo felis facilisis nec. Vivamus varius, urna eu ultrices consectetur, magna magna feugiat lectus, non dictum nisi lorem nec sem.</p>
           <h3 className="pt-2 text-base font-semibold text-white">1. Overview</h3>
-          <p>By using Vibe Campus, you agree to the terms outlined here. If you disagree with any part, please discontinue use of the platform.</p>
+          <p>By using A Vibe Campus, you agree to the terms outlined here. If you disagree with any part, please discontinue use of the platform.</p>
           <h3 className="pt-2 text-base font-semibold text-white">2. Your Data</h3>
           <p>We store the minimum data required to power your learning experience — study sessions, test scores, streaks and preferences.</p>
           <h3 className="pt-2 text-base font-semibold text-white">3. Contact</h3>
