@@ -4,7 +4,9 @@
  */
 type Name = "brain" | "spark" | "compass" | "trophy" | "shield" | "bolt" | "orbit" | "book" | "chat" | "calendar" | "target" | "flame";
 
-const paths: Record<Name, (id: string) => JSX.Element> = {
+import type { ReactNode } from "react";
+
+const paths: Record<Name, (id: string) => ReactNode> = {
   brain: (id) => (
     <>
       <path d="M9 4a4 4 0 00-4 4v1a3 3 0 00-1 5.7V17a4 4 0 004 4h1V4H9z" fill={`url(#${id}-g)`} />
