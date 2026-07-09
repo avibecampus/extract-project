@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
-import { Flame, Trophy, Clock, Target, CalendarClock, ClipboardCheck, Compass, MessageSquare, ArrowUpRight } from "lucide-react";
+import { Flame, Trophy, Clock, Target, CalendarClock, ClipboardCheck, Compass, MessageSquare, ArrowUpRight, TrendingUp } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({ component: Dashboard });
 
@@ -18,96 +18,133 @@ const leaders = [
 ];
 
 const quick = [
-  { to: "/study-session", label: "Study Session", icon: CalendarClock, color: "from-cyan-400/20 to-cyan-400/5" },
-  { to: "/tests", label: "Practice Tests", icon: ClipboardCheck, color: "from-indigo-400/20 to-indigo-400/5" },
-  { to: "/career", label: "Career Map", icon: Compass, color: "from-emerald-400/20 to-emerald-400/5" },
-  { to: "/coach", label: "AI Coach", icon: MessageSquare, color: "from-fuchsia-400/20 to-fuchsia-400/5" },
+  { to: "/study-session", label: "Study Session", desc: "Plan & focus", icon: CalendarClock },
+  { to: "/tests", label: "Practice Tests", desc: "Take a mock", icon: ClipboardCheck },
+  { to: "/career", label: "Career Map", desc: "Your path", icon: Compass },
+  { to: "/coach", label: "AI Coach", desc: "Ask anything", icon: MessageSquare },
 ] as const;
 
 function Dashboard() {
   return (
     <AppShell title="Dashboard">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-white sm:text-3xl">Hey, Student 👋</h1>
-        <p className="mt-1 text-sm text-white/60">Here's your growth at a glance.</p>
+      <div className="mb-8">
+        <h1 className="text-2xl font-semibold text-white sm:text-[28px]">Good to see you back</h1>
+        <p className="mt-1 text-sm text-white/55">Here's your growth at a glance.</p>
       </div>
 
-      {/* Top row */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard icon={Flame} accent="text-orange-300 bg-orange-400/15" label="Current Streak" value="12 days" sub="Keep it hot 🔥" />
-        <StatCard icon={Trophy} accent="text-cyan-300 bg-cyan-400/15" label="Points" value="1,240" sub="+80 this week" progress={62} />
-        <StatCard icon={Clock} accent="text-indigo-300 bg-indigo-400/15" label="Study Time" value="18h" sub="This week" />
-        <StatCard icon={Target} accent="text-emerald-300 bg-emerald-400/15" label="Avg Test Score" value="78%" sub="Last 5 tests" />
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <StatCard icon={Flame} label="Current streak" value="12" unit="days" sub="Personal best" />
+        <StatCard icon={Trophy} label="Points" value="1,240" sub="+80 this week" trend />
+        <StatCard icon={Clock} label="Study time" value="18" unit="h" sub="This week" />
+        <StatCard icon={Target} label="Avg test score" value="78" unit="%" sub="Last 5 tests" />
       </div>
 
-      {/* Middle: quick access + leaders */}
-      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
-          <h2 className="mb-3 text-sm font-semibold text-white/80">Quick access</h2>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {quick.map((q) => (
-              <Link key={q.to} to={q.to} className={`glass group rounded-2xl bg-gradient-to-br ${q.color} p-4 transition hover:-translate-y-0.5`}>
-                <q.icon className="text-white" size={20} />
-                <div className="mt-6 text-sm font-medium text-white">{q.label}</div>
-                <ArrowUpRight size={14} className="mt-1 text-white/40 group-hover:text-cyan-300" />
-              </Link>
-            ))}
-          </div>
-
-          <h2 className="mt-6 mb-3 text-sm font-semibold text-white/80">Recent activity</h2>
-          <div className="glass divide-y divide-white/5 rounded-2xl">
-            {activity.map((a, i) => (
-              <div key={i} className="flex items-center justify-between p-4">
-                <div className="min-w-0">
-                  <div className="truncate text-sm font-medium text-white">{a.title}</div>
-                  <div className="text-xs text-white/50">{a.time}</div>
-                </div>
-                <div className="flex shrink-0 items-center gap-2">
-                  {a.score && <span className="rounded-md bg-emerald-400/15 px-2 py-0.5 text-xs font-semibold text-emerald-300">{a.score}</span>}
-                  <span className="rounded-md bg-white/5 px-2 py-0.5 text-xs text-white/60">{a.tag}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <h2 className="mb-3 text-sm font-semibold text-white/80">Leaders of the Board</h2>
-          <div className="glass rounded-2xl p-4">
-            <div className="mb-3 text-xs text-white/50">Premium preview · placeholder data</div>
-            <ol className="space-y-2">
-              {leaders.map((l, i) => (
-                <li key={l.name} className="flex items-center justify-between rounded-xl bg-white/5 px-3 py-2.5">
-                  <div className="flex items-center gap-3">
-                    <span className={`grid h-7 w-7 place-items-center rounded-full text-xs font-bold ${i === 0 ? "bg-amber-300 text-slate-900" : i === 1 ? "bg-slate-300 text-slate-900" : i === 2 ? "bg-orange-400 text-slate-900" : "bg-white/10 text-white/70"}`}>{i + 1}</span>
-                    <span className="text-sm text-white">{l.name}</span>
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2 space-y-6">
+          <section>
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-white">Quick access</h2>
+            </div>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {quick.map((q) => (
+                <Link key={q.to} to={q.to} className="group surface rounded-lg p-4 transition hover:border-white/20 hover:bg-white/[0.04]">
+                  <div className="flex items-center justify-between">
+                    <q.icon className="text-white/70" size={16} strokeWidth={1.75} />
+                    <ArrowUpRight size={13} className="text-white/25 transition group-hover:text-white/70" />
                   </div>
-                  <span className="text-xs font-semibold text-cyan-300">{l.score.toLocaleString()}</span>
-                </li>
+                  <div className="mt-6 text-[13px] font-medium text-white">{q.label}</div>
+                  <div className="text-[11px] text-white/45">{q.desc}</div>
+                </Link>
               ))}
-            </ol>
-            <Link to="/premium" className="mt-3 block rounded-xl border border-cyan-400/30 py-2 text-center text-xs font-semibold text-cyan-200 hover:bg-cyan-400/10">
-              Unlock full leaderboard →
-            </Link>
-          </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-white">Recent activity</h2>
+              <button className="text-[11px] text-white/50 hover:text-white">View all</button>
+            </div>
+            <div className="surface divide-y divide-white/6 rounded-lg">
+              {activity.map((a, i) => (
+                <div key={i} className="flex items-center justify-between p-4">
+                  <div className="min-w-0">
+                    <div className="truncate text-sm font-medium text-white">{a.title}</div>
+                    <div className="mt-0.5 text-[11px] text-white/45">{a.time}</div>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-2">
+                    {a.score && <span className="rounded-md bg-white/5 px-2 py-0.5 text-[11px] font-semibold text-[oklch(0.78_0.12_250)]">{a.score}</span>}
+                    <span className="rounded-md border border-white/8 px-2 py-0.5 text-[11px] text-white/55">{a.tag}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
+
+        <aside className="space-y-6">
+          <section>
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-white">Leaderboard</h2>
+              <span className="text-[10px] uppercase tracking-wider text-white/40">Preview</span>
+            </div>
+            <div className="surface rounded-lg p-3">
+              <ol className="space-y-1">
+                {leaders.map((l, i) => (
+                  <li key={l.name} className="flex items-center justify-between rounded-md px-2.5 py-2 hover:bg-white/[0.03]">
+                    <div className="flex items-center gap-3">
+                      <span className="w-4 text-[11px] font-medium text-white/45">{i + 1}</span>
+                      <span className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.03] text-[11px] font-medium text-white/80">{l.name.charAt(0)}</span>
+                      <span className="text-sm text-white/85">{l.name}</span>
+                    </div>
+                    <span className="text-[12px] font-medium text-white/70">{l.score.toLocaleString()}</span>
+                  </li>
+                ))}
+              </ol>
+              <Link to="/premium" className="mt-3 block rounded-md border border-white/10 py-2 text-center text-[11px] font-medium text-white/70 hover:border-white/20 hover:text-white">
+                Unlock full leaderboard →
+              </Link>
+            </div>
+          </section>
+
+          <section>
+            <div className="mb-3 flex items-center gap-2">
+              <TrendingUp size={14} className="text-white/50" />
+              <h2 className="text-sm font-semibold text-white">This week</h2>
+            </div>
+            <div className="surface rounded-lg p-4">
+              <div className="flex items-end justify-between gap-1.5">
+                {[35, 60, 45, 80, 30, 70, 55].map((h, i) => (
+                  <div key={i} className="flex flex-1 flex-col items-center gap-1.5">
+                    <div className="w-full rounded-sm bg-[oklch(0.72_0.13_250)]/50" style={{ height: `${h}px` }} />
+                    <span className="text-[10px] text-white/40">{["M","T","W","T","F","S","S"][i]}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center justify-between text-[11px]">
+                <span className="text-white/50">Total this week</span>
+                <span className="font-medium text-white">18h 42m</span>
+              </div>
+            </div>
+          </section>
+        </aside>
       </div>
     </AppShell>
   );
 }
 
-function StatCard({ icon: Icon, label, value, sub, accent, progress }: any) {
+function StatCard({ icon: Icon, label, value, unit, sub, trend }: { icon: any; label: string; value: string; unit?: string; sub?: string; trend?: boolean }) {
   return (
-    <div className="glass rounded-2xl p-4">
-      <div className={`grid h-10 w-10 place-items-center rounded-xl ${accent}`}><Icon size={18} /></div>
-      <div className="mt-4 text-xs text-white/60">{label}</div>
-      <div className="mt-1 text-2xl font-bold text-white">{value}</div>
-      <div className="text-xs text-white/50">{sub}</div>
-      {progress != null && (
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full bg-gradient-to-r from-cyan-400 to-indigo-500" style={{ width: `${progress}%` }} />
-        </div>
-      )}
+    <div className="surface rounded-lg p-4">
+      <div className="flex items-center justify-between">
+        <span className="grid h-7 w-7 place-items-center rounded-md border border-white/8 bg-white/[0.03] text-white/60"><Icon size={13} strokeWidth={1.75} /></span>
+        {trend && <TrendingUp size={12} className="text-[oklch(0.74_0.14_155)]" />}
+      </div>
+      <div className="mt-4 text-[11px] uppercase tracking-wider text-white/45">{label}</div>
+      <div className="mt-1 flex items-baseline gap-1">
+        <span className="text-2xl font-semibold text-white">{value}</span>
+        {unit && <span className="text-sm text-white/50">{unit}</span>}
+      </div>
+      {sub && <div className="mt-0.5 text-[11px] text-white/45">{sub}</div>}
     </div>
   );
 }
