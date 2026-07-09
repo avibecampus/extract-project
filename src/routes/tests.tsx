@@ -44,14 +44,14 @@ function Tests() {
         <>
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold text-white sm:text-3xl">Practice Tests</h1>
-              <p className="text-sm text-white/60">GFYTE-powered mocks with instant analytics.</p>
+              <h1 className="text-2xl font-semibold text-white sm:text-[28px]">Practice Tests</h1>
+              <p className="mt-1 text-sm text-white/55">Mock exams with instant analytics.</p>
             </div>
             <div className="flex gap-2">
-              <select value={subject} onChange={(e) => setSubject(e.target.value)} className="rounded-lg border border-white/10 bg-slate-900/70 px-3 py-2 text-sm text-white">
+              <select value={subject} onChange={(e) => setSubject(e.target.value)} className="rounded-md border border-white/10 bg-[oklch(0.19_0.010_260)] px-3 py-2 text-sm text-white/80 outline-none focus:border-[oklch(0.72_0.13_250)]">
                 {["All","FR","Tax","Cost","Audit"].map((s) => <option key={s}>{s}</option>)}
               </select>
-              <select value={diff} onChange={(e) => setDiff(e.target.value)} className="rounded-lg border border-white/10 bg-slate-900/70 px-3 py-2 text-sm text-white">
+              <select value={diff} onChange={(e) => setDiff(e.target.value)} className="rounded-md border border-white/10 bg-[oklch(0.19_0.010_260)] px-3 py-2 text-sm text-white/80 outline-none focus:border-[oklch(0.72_0.13_250)]">
                 {["All","Easy","Medium","Hard"].map((s) => <option key={s}>{s}</option>)}
               </select>
             </div>
@@ -59,82 +59,76 @@ function Tests() {
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((t) => (
-              <div key={t.id} className="glass rounded-2xl p-5">
+              <div key={t.id} className="surface rounded-lg p-5 transition hover:border-white/20">
                 <div className="flex items-start justify-between">
-                  <span className="rounded-md bg-indigo-400/20 px-2 py-0.5 text-xs text-indigo-200">{t.subject}</span>
-                  <span className={`rounded-md px-2 py-0.5 text-xs ${
-                    t.difficulty === "Easy" ? "bg-emerald-400/15 text-emerald-300" :
-                    t.difficulty === "Medium" ? "bg-cyan-400/15 text-cyan-200" :
-                    "bg-rose-400/15 text-rose-300"}`}>{t.difficulty}</span>
+                  <span className="rounded-md border border-white/10 px-2 py-0.5 text-[11px] text-white/60">{t.subject}</span>
+                  <span className={`rounded-md px-2 py-0.5 text-[11px] ${
+                    t.difficulty === "Easy" ? "border border-[oklch(0.74_0.14_155)]/30 text-[oklch(0.82_0.13_155)]" :
+                    t.difficulty === "Medium" ? "border border-white/10 text-white/60" :
+                    "border border-[oklch(0.66_0.20_25)]/40 text-[oklch(0.78_0.16_25)]"}`}>{t.difficulty}</span>
                 </div>
-                <h3 className="mt-3 text-base font-semibold text-white">{t.name}</h3>
-                <div className="mt-2 text-xs text-white/60">{t.questions} questions · Best: {t.best ? `${t.best}%` : "—"}</div>
-                <button onClick={start} className="mt-4 w-full rounded-xl bg-cyan-400 py-2 text-sm font-semibold text-slate-900 hover:bg-cyan-300">Start Test</button>
+                <h3 className="mt-4 text-[15px] font-semibold text-white">{t.name}</h3>
+                <div className="mt-1.5 text-[11px] text-white/45">{t.questions} questions · Best {t.best ? `${t.best}%` : "—"}</div>
+                <button onClick={start} className="btn-primary mt-5 w-full">Start Test</button>
               </div>
             ))}
           </div>
 
-          <div className="mt-8 text-center text-xs text-white/40">Powered by Good for You Test Engine</div>
+          <div className="mt-8 text-center text-[11px] text-white/35">Powered by Good for You Test Engine</div>
         </>
       )}
 
       {stage === "test" && (
-        <div className="glass-strong mx-auto max-w-3xl rounded-2xl p-6">
+        <div className="surface-strong mx-auto max-w-3xl rounded-lg p-6 sm:p-8">
           <div className="mb-4 flex items-center justify-between">
             <div className="text-sm text-white/70">Question {idx + 1} of {sampleQs.length}</div>
-            <div className="inline-flex items-center gap-1.5 rounded-lg bg-white/5 px-2.5 py-1 text-xs text-white/70">
-              <Timer size={14} /> {Math.floor(time/60)}:{String(time%60).padStart(2,"0")}
+            <div className="inline-flex items-center gap-1.5 rounded-md border border-white/10 px-2.5 py-1 text-[11px] text-white/60">
+              <Timer size={12} /> {Math.floor(time/60)}:{String(time%60).padStart(2,"0")}
             </div>
           </div>
-          <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-            <div className="h-full bg-cyan-400" style={{ width: `${((idx+1)/sampleQs.length)*100}%` }} />
+          <div className="mb-6 h-1 overflow-hidden rounded-full bg-white/8">
+            <div className="h-full bg-[oklch(0.64_0.16_255)] transition-all" style={{ width: `${((idx+1)/sampleQs.length)*100}%` }} />
           </div>
-          <h2 className="mt-4 text-lg font-semibold text-white">{sampleQs[idx].q}</h2>
-          <div className="mt-4 grid gap-2">
+          <h2 className="text-lg font-semibold text-white">{sampleQs[idx].q}</h2>
+          <div className="mt-5 grid gap-2">
             {sampleQs[idx].options.map((o, i) => {
               const chosen = answers[idx] === i;
               return (
                 <button key={i} onClick={() => { const next = [...answers]; next[idx] = i; setAnswers(next); }}
-                  className={`rounded-xl border p-3 text-left text-sm transition ${chosen ? "border-cyan-400/60 bg-cyan-400/10 text-white" : "border-white/10 bg-white/5 text-white/80 hover:bg-white/10"}`}>
+                  className={`rounded-md border p-3 text-left text-sm transition ${chosen ? "border-[oklch(0.72_0.13_250)] bg-white/[0.04] text-white" : "border-white/8 bg-white/[0.02] text-white/75 hover:border-white/20"}`}>
                   {o}
                 </button>
               );
             })}
           </div>
           <div className="mt-6 flex justify-between">
-            <button disabled={idx === 0} onClick={() => setIdx(idx - 1)} className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 px-4 py-2 text-sm text-white disabled:opacity-40">
+            <button disabled={idx === 0} onClick={() => setIdx(idx - 1)} className="btn-ghost !py-2 disabled:opacity-40">
               <ArrowLeft size={14} /> Prev
             </button>
             {idx < sampleQs.length - 1 ? (
-              <button onClick={() => setIdx(idx + 1)} className="inline-flex items-center gap-1.5 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-900">
-                Next <ArrowRight size={14} />
-              </button>
+              <button onClick={() => setIdx(idx + 1)} className="btn-primary !py-2">Next <ArrowRight size={14} /></button>
             ) : (
-              <button onClick={() => setStage("result")} className="rounded-lg bg-emerald-400 px-4 py-2 text-sm font-semibold text-slate-900">
-                Submit
-              </button>
+              <button onClick={() => setStage("result")} className="btn-primary !py-2">Submit</button>
             )}
           </div>
         </div>
       )}
 
       {stage === "result" && (
-        <div className="glass-strong mx-auto max-w-2xl rounded-2xl p-8 text-center">
-          <div className="text-xs uppercase tracking-widest text-white/50">Your score</div>
-          <div className="my-4 text-6xl font-extrabold text-white">{pct}%</div>
-          <div className="text-sm text-white/60">Time taken · {Math.floor(time/60)}:{String(time%60).padStart(2,"0")}</div>
+        <div className="surface-strong mx-auto max-w-2xl rounded-lg p-8 text-center">
+          <div className="text-[11px] uppercase tracking-widest text-white/40">Your score</div>
+          <div className="my-4 text-6xl font-semibold text-white">{pct}%</div>
+          <div className="text-sm text-white/55">Time · {Math.floor(time/60)}:{String(time%60).padStart(2,"0")}</div>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-3">
-            <Metric label="Correct" value={String(score)} tone="emerald" />
-            <Metric label="Wrong" value={String(sampleQs.length - score)} tone="rose" />
-            <Metric label="Total" value={String(sampleQs.length)} tone="cyan" />
+          <div className="mt-8 grid gap-3 sm:grid-cols-3">
+            <Metric label="Correct" value={String(score)} />
+            <Metric label="Wrong" value={String(sampleQs.length - score)} />
+            <Metric label="Total" value={String(sampleQs.length)} />
           </div>
 
           <div className="mt-6 flex flex-wrap justify-center gap-2">
-            <button onClick={start} className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-900">
-              <RefreshCw size={14} /> Retake
-            </button>
-            <button onClick={() => setStage("list")} className="rounded-xl border border-white/15 px-4 py-2 text-sm text-white hover:bg-white/5">Back to Tests</button>
+            <button onClick={start} className="btn-primary"><RefreshCw size={14} /> Retake</button>
+            <button onClick={() => setStage("list")} className="btn-ghost">Back to tests</button>
           </div>
         </div>
       )}
@@ -142,7 +136,11 @@ function Tests() {
   );
 }
 
-function Metric({ label, value, tone }: { label: string; value: string; tone: "emerald" | "rose" | "cyan" }) {
-  const map = { emerald: "text-emerald-300 bg-emerald-400/10", rose: "text-rose-300 bg-rose-400/10", cyan: "text-cyan-200 bg-cyan-400/10" };
-  return <div className={`rounded-xl p-4 ${map[tone]}`}><div className="text-2xl font-bold">{value}</div><div className="text-xs opacity-80">{label}</div></div>;
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md border border-white/8 bg-white/[0.02] p-4">
+      <div className="text-2xl font-semibold text-white">{value}</div>
+      <div className="text-[11px] text-white/50">{label}</div>
+    </div>
+  );
 }
