@@ -59,7 +59,7 @@ function LoginPage() {
           {step === 1 && (
             <>
               <h1 className="text-2xl font-bold text-white">{mode === "signup" ? "Create your account" : "Welcome back"}</h1>
-              <p className="mt-1 text-sm text-white/60">{mode === "signup" ? "Join the campus in seconds." : "Sign back into Vibe Campus."}</p>
+              <p className="mt-1 text-sm text-white/60">{mode === "signup" ? "Join the campus in seconds." : "Sign back into A Vibe Campus."}</p>
 
               <form onSubmit={submitAuth} className="mt-6 space-y-4">
                 <div>

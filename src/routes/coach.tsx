@@ -16,7 +16,7 @@ type Msg = { from: "me" | "ai"; text: string; time: string };
 function Coach() {
   const [mode, setMode] = useState<(typeof modes)[number]["id"]>("doubt");
   const [messages, setMessages] = useState<Msg[]>([
-    { from: "ai", text: "Hey! I'm your Vibe Coach. Ask me anything — doubts, career questions, or just say hi.", time: "now" },
+    { from: "ai", text: "Hey! I'm your Vibe Coach at A Vibe Campus. Ask me anything — doubts, career questions, or just say hi.", time: "now" },
   ]);
   const [input, setInput] = useState("");
 
