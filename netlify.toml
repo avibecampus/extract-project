@@ -1,9 +1,7 @@
 [build]
-  command = "bun install --frozen-lockfile && bun run build"
+  command = "bun run build"
   publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-bun"
-
 [build.environment]
+  BUN_FLAGS = "--frozen-lockfile"
   BUN_VERSION = "1.2.14"
