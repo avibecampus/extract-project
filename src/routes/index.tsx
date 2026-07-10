@@ -2,24 +2,49 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Logo } from "@/components/Logo";
 import { BackgroundFX } from "@/components/BackgroundFX";
 import { ArrowRight, Brain, CalendarClock, ClipboardCheck, Compass, Check } from "lucide-react";
+import { useAuth } from "@/components/auth/auth-context";
 
 export const Route = createFileRoute("/")({
   component: Landing,
   head: () => ({
     meta: [
       { title: "A Vibe Campus — The student growth OS" },
-      { name: "description", content: "A Vibe Campus is a focused workspace for students — study sessions, an AI coach, mock tests, and a career roadmap in one calm, professional hub." },
+      {
+        name: "description",
+        content:
+          "A Vibe Campus is a focused workspace for students — study sessions, an AI coach, mock tests, and a career roadmap in one calm, professional hub.",
+      },
       { property: "og:title", content: "A Vibe Campus — The student growth OS" },
-      { property: "og:description", content: "A focused workspace for students — study sessions, AI coach, mock tests, and a career roadmap." },
+      {
+        property: "og:description",
+        content:
+          "A focused workspace for students — study sessions, AI coach, mock tests, and a career roadmap.",
+      },
     ],
   }),
 });
 
 const benefits = [
-  { icon: Brain, title: "AI Study Coach", desc: "Ask doubts, get career advice and daily direction — with memory of your journey." },
-  { icon: CalendarClock, title: "Structured Study", desc: "Assign topics to dates, run focus timers, and never miss a session." },
-  { icon: ClipboardCheck, title: "Practice Tests", desc: "Mock tests with instant analytics, historical scores, and weak-area detection." },
-  { icon: Compass, title: "Career Roadmap", desc: "A step-by-step path from where you are today to your dream role." },
+  {
+    icon: Brain,
+    title: "AI Study Coach",
+    desc: "Ask doubts, get career advice and daily direction — with memory of your journey.",
+  },
+  {
+    icon: CalendarClock,
+    title: "Structured Study",
+    desc: "Assign topics to dates, run focus timers, and never miss a session.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Practice Tests",
+    desc: "Mock tests with instant analytics, historical scores, and weak-area detection.",
+  },
+  {
+    icon: Compass,
+    title: "Career Roadmap",
+    desc: "A step-by-step path from where you are today to your dream role.",
+  },
 ];
 
 const proof = [
@@ -29,6 +54,15 @@ const proof = [
 ];
 
 function Landing() {
+  const { user, loading } = useAuth();
+  const dashboardTarget = user ? "/dashboard" : "/login";
+  const primaryLabel = user ? "Open dashboard" : "Get started";
+  const secondaryLabel = loading
+    ? "Checking session"
+    : user
+      ? "Continue learning"
+      : "View dashboard";
+
   return (
     <div className="relative min-h-screen">
       <BackgroundFX />
@@ -37,13 +71,23 @@ function Landing() {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <Logo />
           <nav className="hidden items-center gap-6 text-sm text-white/60 md:flex">
-            <a href="#features" className="hover:text-white">Features</a>
-            <a href="#proof" className="hover:text-white">Why us</a>
-            <Link to="/legal" className="hover:text-white">Legal</Link>
+            <a href="#features" className="hover:text-white">
+              Features
+            </a>
+            <a href="#proof" className="hover:text-white">
+              Why us
+            </a>
+            <Link to="/legal" className="hover:text-white">
+              Legal
+            </Link>
           </nav>
           <div className="flex items-center gap-2">
-            <Link to="/login" className="btn-ghost !py-1.5 !text-xs">Sign in</Link>
-            <Link to="/login" className="btn-primary !py-1.5 !text-xs">Get started</Link>
+            <Link to={user ? "/dashboard" : "/login"} className="btn-ghost !py-1.5 !text-xs">
+              {user ? "Dashboard" : "Sign in"}
+            </Link>
+            <Link to={dashboardTarget} className="btn-primary !py-1.5 !text-xs">
+              {primaryLabel}
+            </Link>
           </div>
         </div>
       </header>
@@ -55,16 +99,24 @@ function Landing() {
           Now in open beta for students in India
         </div>
         <h1 className="mx-auto mt-6 max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight text-white sm:text-6xl">
-          The focused workspace<br className="hidden sm:block" /> for serious students.
+          The focused workspace
+          <br className="hidden sm:block" /> for serious students.
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-white/60">
-          Plan your syllabus, run deep-focus sessions, take mock tests, and get guidance from an AI coach — in one calm, professional workspace.
+          Plan your syllabus, run deep-focus sessions, take mock tests, and get guidance from an AI
+          coach — in one calm, professional workspace.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link to="/login" className="btn-primary">Get started free <ArrowRight size={14} /></Link>
-          <Link to="/dashboard" className="btn-ghost">View dashboard</Link>
+          <Link to={dashboardTarget} className="btn-primary">
+            {primaryLabel} <ArrowRight size={14} />
+          </Link>
+          <Link to={dashboardTarget} className="btn-ghost">
+            {secondaryLabel}
+          </Link>
         </div>
-        <div className="mt-4 text-xs text-white/40">No credit card required · Free forever plan</div>
+        <div className="mt-4 text-xs text-white/40">
+          No credit card required · Free forever plan
+        </div>
       </section>
 
       {/* Product preview mock */}
@@ -99,9 +151,14 @@ function Landing() {
                   ["Tue", "Taxation · Direct Tax basics", "1.5h"],
                   ["Wed", "Mock Test — Cost Accounting", "1h"],
                 ].map(([d, t, h]) => (
-                  <div key={d} className="flex items-center justify-between rounded-md border border-white/6 bg-white/[0.015] px-3 py-2 text-sm">
+                  <div
+                    key={d}
+                    className="flex items-center justify-between rounded-md border border-white/6 bg-white/[0.015] px-3 py-2 text-sm"
+                  >
                     <div className="flex items-center gap-3">
-                      <span className="w-8 text-[11px] font-medium uppercase tracking-wider text-white/40">{d}</span>
+                      <span className="w-8 text-[11px] font-medium uppercase tracking-wider text-white/40">
+                        {d}
+                      </span>
                       <span className="text-white/85">{t}</span>
                     </div>
                     <span className="text-[11px] text-white/50">{h}</span>
@@ -114,10 +171,17 @@ function Landing() {
       </section>
 
       {/* Features */}
-      <section id="features" className="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+      <section
+        id="features"
+        className="relative z-10 mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24"
+      >
         <div className="mb-10 text-center">
-          <div className="text-[11px] font-medium uppercase tracking-widest text-white/40">Features</div>
-          <h2 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">Everything you need. Nothing you don't.</h2>
+          <div className="text-[11px] font-medium uppercase tracking-widest text-white/40">
+            Features
+          </div>
+          <h2 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">
+            Everything you need. Nothing you don't.
+          </h2>
         </div>
         <div className="grid gap-px overflow-hidden rounded-xl border border-white/8 bg-white/8 sm:grid-cols-2 lg:grid-cols-4">
           {benefits.map((b) => (
@@ -150,27 +214,59 @@ function Landing() {
       <section className="relative z-10 mx-auto max-w-6xl px-4 pb-24 sm:px-6">
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="surface rounded-xl p-6">
-            <div className="text-[11px] font-medium uppercase tracking-widest text-white/40">Free</div>
-            <div className="mt-2 text-3xl font-semibold text-white">₹0<span className="text-sm font-normal text-white/40"> / forever</span></div>
+            <div className="text-[11px] font-medium uppercase tracking-widest text-white/40">
+              Free
+            </div>
+            <div className="mt-2 text-3xl font-semibold text-white">
+              ₹0<span className="text-sm font-normal text-white/40"> / forever</span>
+            </div>
             <p className="mt-2 text-sm text-white/55">Everything a student needs to start.</p>
             <ul className="mt-5 space-y-2 text-sm text-white/70">
-              {["Study planner + focus timer", "AI Coach (standard)", "Unlimited practice tests", "Career roadmap"].map((x) => (
-                <li key={x} className="flex items-center gap-2"><Check size={14} className="text-[oklch(0.72_0.13_250)]" />{x}</li>
+              {[
+                "Study planner + focus timer",
+                "AI Coach (standard)",
+                "Unlimited practice tests",
+                "Career roadmap",
+              ].map((x) => (
+                <li key={x} className="flex items-center gap-2">
+                  <Check size={14} className="text-[oklch(0.72_0.13_250)]" />
+                  {x}
+                </li>
               ))}
             </ul>
-            <Link to="/login" className="mt-6 btn-ghost w-full">Get started</Link>
+            <Link to="/login" className="mt-6 btn-ghost w-full">
+              Get started
+            </Link>
           </div>
           <div className="surface-strong relative rounded-xl p-6">
-            <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">Coming soon</span>
-            <div className="text-[11px] font-medium uppercase tracking-widest text-[oklch(0.78_0.12_250)]">Premium</div>
-            <div className="mt-2 text-3xl font-semibold text-white">₹99<span className="text-sm font-normal text-white/40"> / month</span></div>
-            <p className="mt-2 text-sm text-white/55">For students who want to compete and grow faster.</p>
+            <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/[0.05] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">
+              Coming soon
+            </span>
+            <div className="text-[11px] font-medium uppercase tracking-widest text-[oklch(0.78_0.12_250)]">
+              Premium
+            </div>
+            <div className="mt-2 text-3xl font-semibold text-white">
+              ₹99<span className="text-sm font-normal text-white/40"> / month</span>
+            </div>
+            <p className="mt-2 text-sm text-white/55">
+              For students who want to compete and grow faster.
+            </p>
             <ul className="mt-5 space-y-2 text-sm text-white/70">
-              {["Weekly live tests + leaderboard", "Priority AI Coach", "Study buddy matching", "Community chat rooms"].map((x) => (
-                <li key={x} className="flex items-center gap-2"><Check size={14} className="text-[oklch(0.72_0.13_250)]" />{x}</li>
+              {[
+                "Weekly live tests + leaderboard",
+                "Priority AI Coach",
+                "Study buddy matching",
+                "Community chat rooms",
+              ].map((x) => (
+                <li key={x} className="flex items-center gap-2">
+                  <Check size={14} className="text-[oklch(0.72_0.13_250)]" />
+                  {x}
+                </li>
               ))}
             </ul>
-            <Link to="/premium" className="mt-6 btn-primary w-full">Explore Premium</Link>
+            <Link to="/premium" className="mt-6 btn-primary w-full">
+              Explore Premium
+            </Link>
           </div>
         </div>
       </section>
@@ -179,9 +275,15 @@ function Landing() {
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 sm:flex-row sm:justify-between sm:px-6">
           <Logo size={26} />
           <div className="flex gap-5">
-            <Link to="/legal" className="hover:text-white/70">Terms & Privacy</Link>
-            <a href="#" className="hover:text-white/70">Twitter</a>
-            <a href="#" className="hover:text-white/70">Instagram</a>
+            <Link to="/legal" className="hover:text-white/70">
+              Terms & Privacy
+            </Link>
+            <a href="#" className="hover:text-white/70">
+              Twitter
+            </a>
+            <a href="#" className="hover:text-white/70">
+              Instagram
+            </a>
           </div>
           <div>© {new Date().getFullYear()} A Vibe Campus</div>
         </div>
